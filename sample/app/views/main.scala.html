@@ -1,0 +1,25 @@
+@(title: String, moreStyles: Seq[(String, String)] = Nil, moreScripts: Seq[String] = Nil)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        @styleSheets(
+        	Seq(
+        		("screen", "stylesheets/bootstrap.min.css"),
+        		("screen", "stylesheets/main.css")
+        	) ++ moreStyles
+        )
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        @javaScripts(
+        	Seq(
+        		("javascripts/jquery-1.7.1.min.js"),
+        		("javascripts/bootstrap.min.js")
+        	) ++ moreScripts
+        )
+    </head>
+    <body>
+        @content
+    </body>
+</html>

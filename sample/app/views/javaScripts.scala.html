@@ -1,0 +1,5 @@
+@(scripts: Seq[String])
+
+@scripts.map { script =>
+	<script src="@routes.Assets.at(script)" type="text/javascript"></script>
+}

@@ -1,4 +1,4 @@
-This is your new Play 2.0 application
+Play 2.0 用 Jobプラグイン
 =====================================
 
-This file will be packaged with your application, when using `play dist`.
+cron4jを使ったJobプラグイン

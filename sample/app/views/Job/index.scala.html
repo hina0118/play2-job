@@ -1,0 +1,102 @@
+@(jobs: List[plugin.job.JobData])
+
+@import helper._
+@import controllers.routes.javascript._
+
+@main("ジョブプラグイン - ジョブ一覧",
+	moreScripts = Seq(("javascripts/job.js"))
+) {
+@javascriptRouter("jsRoutes")(
+	Job.schedule,
+	Job.reschedule
+)
+<div class="container">
+	<div class="page-header">
+		<h1>ジョブプラグイン <small>ジョブ一覧 </small></h1>
+	</div>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>ジョブ</th>
+				<th>スケジュール</th>
+				<th>状態</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@for(job <- jobs) {
+			<tr>
+				<td>@job</td>
+				<td>@job.schedulingPattern</td>
+				<td>
+					@if(job.isRunning()) {
+					<span class="label label-success">実行中</span>
+					} else {
+					<span class="label">停止</span>
+					}
+				</td>
+				<td>
+					<a class="btn btn-mini btn-success" href="@routes.Job.launch(job.id)">
+						<i class="icon-play icon-white"></i> 実行
+					</a>
+					@if(!job.isRunning()) {
+					<a class="btn btn-mini btn-primary scheduleBtn" data-toggle="modal" href="#scheduleModal" job-id="@job.id">
+						<i class="icon-refresh icon-white"></i> 開始
+					</a>
+					} else {
+					<a class="btn btn-mini btn-primary disabled">
+						<i class="icon-refresh icon-white"></i> 開始
+					</a>
+					}
+					@if(job.isRunning()) {
+					<a class="btn btn-mini btn-info rescheduleBtn" data-toggle="modal" href="#rescheduleModal" job-id="@job.id">
+						<i class="icon-time icon-white"></i> 再設定
+					</a>
+					<a class="btn btn-mini btn-danger" href="@routes.Job.deschedule(job.id)">
+						<i class="icon-pause icon-white"></i> 停止
+					</a>
+					} else {
+					<a class="btn btn-mini btn-info disabled">
+						<i class="icon-time icon-white"></i> 再設定
+					</a>
+					<a class="btn btn-mini btn-danger disabled">
+						<i class="icon-pause icon-white"></i> 停止
+					</a>
+					}
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</div>
+<div class="modal hide fade" id="scheduleModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h3>スケジュール入力</h3>
+	</div>
+	<div class="modal-body">
+		<label>スケジュール</label>
+		<input type="text" class="input-small" id="schedulingPattern">
+		<input type="hidden" id="schedulingJobId">
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">キャンセル</a>
+		<a href="#" class="btn btn-primary" id="schedulingJob">ＯＫ</a>
+	</div>
+</div>
+<div class="modal hide fade" id="rescheduleModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h3>スケジュール入力</h3>
+	</div>
+	<div class="modal-body">
+		<label>スケジュール</label>
+		<input type="text" class="input-small" id="reschedulingPattern">
+		<input type="hidden" id="reschedulingJobId">
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">キャンセル</a>
+		<a href="#" class="btn btn-info" id="reschedulingJob">ＯＫ</a>
+	</div>
+</div>
+}
