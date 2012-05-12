@@ -26,7 +26,7 @@ public class JobPlugin extends Plugin {
 		jobMap = new LinkedHashMap<String, JobData>();
 	}
 
-	@Override
+    @Override
 	public void onStart() {
 		scheduler.start();
 		Set<String> startJobNames = application.getTypesAnnotatedWith(jobPackage, OnApplicationStart.class);

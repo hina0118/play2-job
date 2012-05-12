@@ -1,0 +1,10 @@
+.idea
+.idea_modules
+project/project
+project/target
+target
+sample/logs
+sample/project/project
+sample/project/target
+sample/target
+sample/sample.iml

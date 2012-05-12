@@ -14,7 +14,7 @@ object ApplicationBuild extends Build {
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       // Add your own project settings here      
-      resolvers += "hina0118 Maven Repository" at "https://github.com/hina0118/maven-repo/raw/master/snapshots"
+    resolvers += "Local Maven Repository" at "file:///C:/project/maven-repo/snapshots",
     )
 
 }
